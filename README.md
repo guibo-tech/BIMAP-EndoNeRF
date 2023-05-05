@@ -5,6 +5,7 @@ This project uses endoscopy images to generate a 3D reconstruction of the inside
 
 ## Git - Tagging
 Proper Tag usage is important for self-documenting commits that introduce, improve, or fix features. This will make semantic versioning much easier.
+If necessary, in addition to the tag, include the card issue number.
 
 [FEATURE]: A feature or functionality has been developed for the first time.
 
