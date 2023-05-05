@@ -7,12 +7,22 @@ This project uses endoscopy images to generate a 3D reconstruction of the inside
 Proper Tag usage is important for self-documenting commits that introduce, improve, or fix features. This will make semantic versioning much easier.
 
 [FEATURE]: A feature or functionality has been developed for the first time.
+
 [IMPROVE]: Existing correct functionality has been improved.
+
 [FIX]: Existing incorrect code has been fixed.
+
 [TESTS]: A commit concerns test coverage or functionality only.
+
 [CHORE]: Something that is not a feature, fix, improvement, test, release or pipeline commit. For example, a code style cleanup.
+
 [CLEANUP]: To clean up redundant or outdated files.
-[STYLE]: For commits regarding the style guidelines
+
+[STYLE]: For commits regarding the style guidelines.
+
 [MISC]: A general miscellaneous type of changes which does not lie in any of other categories.
+
 [REPOSITORY]: When changes are related to repository structure and settings, creating tags, branches, shelves, folders and etc.
+
 [RELEASE]: When a new installer version is created or anything for the Project release version (i.e. documentation, ...) was changed.
+
