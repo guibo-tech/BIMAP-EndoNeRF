@@ -1,4 +1,0 @@
-Required data to run EndoNerf (med-air) project:
-- poses_bounds.py
-- images
-- depth_maps
