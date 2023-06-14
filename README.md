@@ -6,18 +6,25 @@ This project uses endoscopy images to generate a 3D reconstruction of the inside
 ## Steps (14.06.2023)
 
 1. Video to images (frames), select sharp images, select images where the camera position is similar. illumination.
+
 python script to automatize
 
 2. Colmap (important that output includes "sparse" and "images" folders)
+
 run this line in conda environment ngp in the directory where the folder "images" is
+
 python C:\<pathto>\instant-ngp\scripts\colmap2nerf.py --colmap_matcher exhaustive --run_colmap --aabb_scale 16 --overwrite
 
 3. Generate poses_bounds.npy
+
 run the function gen_poses(dir_sparse_images) that is in path: C:\<pathto>\LLFF\llff\poses\pose_utils.py (cloned GitHub repository)
 
 4. Extract depth maps with MIDAS (CUDA workstation) cloned GitHub repository
+
 include in folder input the images used for colmap
+
 in conda environment midas-py310:
+
 python run.py --model_type dpt_beit_large_512 --input_path input --output_path output --grayscale
 
 5. Create folder with folders:
