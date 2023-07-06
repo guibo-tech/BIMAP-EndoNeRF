@@ -3,16 +3,15 @@ import os
 
 def vid2frames(video,fps=3):
         
-    vidcap = cv2.VideoCapture('video')
+    vidcap = cv2.VideoCapture(video)
     success, image = vidcap.read()
     count = 0
     os.mkdir('./frames')
     os.chdir('./frames')
 
-    desired_fps = 2
 
     frame_rate = vidcap.get(cv2.CAP_PROP_FPS)
-    frame_delay = int(frame_rate / desired_fps)
+    frame_delay = int(frame_rate / fps)
     frame_counter = 0
 
     while success:
