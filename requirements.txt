@@ -1,2 +1,7 @@
 matplotlib
 numpy
+imageio
+configargparse
+open3d
+os
+aspose
