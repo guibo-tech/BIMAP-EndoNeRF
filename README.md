@@ -3,6 +3,37 @@
 ## Introduction
 This project uses endoscopy images to generate a 3D reconstruction of the inside of the human body. This is done by using the endoscope's position and orientation as input to the NeRF network, along with the 2D images captured by the endoscope. The NeRF network then generates a 3D model of the internal structure of the body that matches the captured images.
 
+
+## Project Structure
+
+Prepare a data directory organized in the following structure:
+
+```
+BIMAP-EndoNeRF/
+├── data/
+│   ├── video/                # raw video
+│   ├── images/               # raw rgb images
+│   ├── images_pp/            # preprocessed images
+│   ├── depth/                # depth images
+│   ├── depth_seg/            # depth images + vocal cord segmentation
+│   ├── pc_gltf               # point cloud gltf format
+│   ├── pc_ply                # point cloud ply format
+│   └── poses_bounds.npy      # camera poses & intrinsics in LLFF format
+├── data_source/              # data set examples, backup tests, etc
+│   ├── dataset/
+│   └── tests/
+├── docs/                     # documentation 
+├── requirements.txt          # Python packages
+├── .gitignore                # files and directories ignored by Git
+├── LICENSE                   # license agreement
+├── vid2frames.py             # generate frames from a video
+├── gltf2ply.py               # transform gltf file to ply
+├── vc_segmenter.py           # vocal cord segmenter
+├── pc_visualizer.py          # visualizer to play point cloud animations
+└── README.md                 # instructions for installation and usage
+
+```
+
 ## Steps (14.06.2023)
 
 1. Video to images (frames), select sharp images, select images where the camera position is similar. illumination.
@@ -31,6 +62,8 @@ python run.py --model_type dpt_beit_large_512 --input_path input --output_path o
 - poses_bounds.py
 - images
 - depth
+
+
 
 ## Git - Tagging
 Proper Tag usage is important for self-documenting commits that introduce, improve, or fix features. This will make semantic versioning much easier.
