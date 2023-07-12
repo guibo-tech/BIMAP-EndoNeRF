@@ -1,5 +1,0 @@
-video: file1416720174_13432365717_na
-start: 10s, end:13s
-duration: 3s
-original frame rate: 25fps
-test rate: 20 fps
