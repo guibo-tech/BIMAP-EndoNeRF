@@ -82,7 +82,7 @@ def vid2frames(video, fps, start_time, end_time):
             blurred = cv2.GaussianBlur(img_inpaint, (0, 0), 2)
             sharpened_image = cv2.addWeighted(img_inpaint, 1.5, blurred, -0.5, 0)
 
-            cv2.imwrite("frame%d.jpg" % count, sharpened_image)
+            cv2.imwrite("frame%d.png" % count, sharpened_image)
             print('Read a new frame:', success)
             count += 1
 
