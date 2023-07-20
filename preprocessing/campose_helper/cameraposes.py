@@ -9,8 +9,11 @@ script_path = os.path.abspath(__file__)
 # Extract the directory name
 script_directory = os.path.dirname(script_path)
 
+# Go one level up to get the previous folder (parent directory)
+parent_dir = os.path.dirname(script_directory)
+
 # Call the function with the current directory
-gen_poses(script_directory)
+gen_poses(parent_dir)
 
 poses = np.load('poses_bounds.npy')
 

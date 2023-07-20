@@ -62,6 +62,10 @@ def save_poses(basedir, poses, pts3d, perm):
         for ind in pts3d[k].image_ids:
             if len(cams) < ind - 1:
                 print('ERROR: the correct camera poses for current points cannot be accessed')
+                print("COLMAP failed for this set of frames. Please, try again with the same set or a different one. Options:\n\
+                      1. Run vid2frames.py and a try completely new interval. \n\
+                      2. Run vid2frames.py and try a longer interval. \n\
+                      3. Delete some frames of this set that are too similar. ")
                 return
             cams[ind-1] = 1
         vis_arr.append(cams)
