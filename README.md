@@ -33,6 +33,7 @@ BIMAP-EndoNeRF/
 └── README.md                 # instructions for installation and usage
 
 ```
+Download torch model in weights folder: [dpt_large_384](https://github.com/isl-org/MiDaS/releases/download/v3/dpt_large_384.pt)
 
 ## Steps (14.06.2023)
 
