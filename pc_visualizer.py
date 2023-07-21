@@ -1,6 +1,6 @@
 import open3d as o3d
 import numpy as np
-import imageio  # import imageio
+import imageio  # import imageio for video recording
 import os
 import configargparse
 import trimesh
@@ -16,13 +16,14 @@ import trimesh
 
 ###################################################################################################
 
-
+# Define a lambda function 'to8b' that converts a floating-point array to 8-bit unsigned integers.
 to8b = lambda x: (255 * np.clip(x, 0, 1)).astype(np.uint8)
 
-
+# Define the main class for visualizing the point cloud sequence.
 class PointCloudSequenceVisualizer:
     def __init__(self, pcd_list, stall_count=0, save_dir='./', no_autoplay=False, no_loop=False, rec_video_fps=30,
                  cam_move='none'):
+        # Initialize various parameters and create the Open3D visualization window.
         self.pcd_list = pcd_list
 
         self.stall_count = stall_count
@@ -80,6 +81,7 @@ class PointCloudSequenceVisualizer:
 
         self.vis.register_animation_callback(lambda _: self._loop_update_cb())
 
+    # Callback function for the animation loop, updates the visualization.
     def _loop_update_cb(self):
         if self.stall_index < self.stall_count:
             self.stall_index += 1
@@ -108,6 +110,7 @@ class PointCloudSequenceVisualizer:
 
         return True
 
+    # Update camera movement based on the 'cam_movement' parameter.
     def _update_camera_movement(self):
         ctr = self.vis.get_view_control()
         if self.cam_movement == 'swing':
@@ -119,6 +122,7 @@ class PointCloudSequenceVisualizer:
                 self.cam_move_params['swing']['move_dir'] = -1 * self.cam_move_params['swing']['move_dir']
                 self.cam_move_params['swing']['move_accum'] = 0
 
+    # Reset the camera pose to the initial position.
     def _reset_cam_pose(self):
         ctr = self.vis.get_view_control()
         init_param = ctr.convert_to_pinhole_camera_parameters()
@@ -129,6 +133,7 @@ class PointCloudSequenceVisualizer:
 
         return True
 
+    # Toggle video recording on/off and save the recorded frames as a video file.
     def _video_record(self):
         self.recording = not self.recording
 
@@ -147,6 +152,7 @@ class PointCloudSequenceVisualizer:
 
         return True
 
+    # Save the current camera pose to a file.
     def _save_cam_pose(self):
         ctr = self.vis.get_view_control()
         param = ctr.convert_to_pinhole_camera_parameters()
@@ -156,6 +162,7 @@ class PointCloudSequenceVisualizer:
 
         return True
 
+    # Load a camera pose from a file and set it as the current camera view.
     def _load_cam_pose(self):
         filename = input('Camera pose load path: ')
         param = o3d.io.read_pinhole_camera_parameters(filename)
@@ -169,12 +176,14 @@ class PointCloudSequenceVisualizer:
 
         return True
 
+    # Capture a screenshot and save it to the specified directory.
     def _capture_screenshot(self):
         filename = os.path.join(self.save_dir, 'frame_%s.png' % self.frame_idx)
         self.vis.capture_screen_image(filename, do_render=True)
 
         return True
 
+    # Pause or resume the point cloud sequence playback.
     def _pause_loop(self):
         self.playing = not self.playing
 
@@ -182,6 +191,7 @@ class PointCloudSequenceVisualizer:
             self.playing = False
             self.frame_idx = 0
 
+    # Move to the next frame in the sequence.
     def _next_frame(self):
         self.frame_idx += 1
 
@@ -190,6 +200,7 @@ class PointCloudSequenceVisualizer:
 
         self.stall_index = self.stall_count
 
+    # Move to the previous frame in the sequence.
     def _prev_frame(self):
         self.frame_idx -= 1
 
@@ -198,6 +209,7 @@ class PointCloudSequenceVisualizer:
 
         self.stall_index = self.stall_count
 
+    # Start the visualization loop.
     def run(self):
         self._reset_cam_pose()
 
@@ -205,7 +217,9 @@ class PointCloudSequenceVisualizer:
         self.vis.destroy_window()
 
 
+# The following block is executed when the script is run directly from the command line.
 if __name__ == '__main__':
+    # Parse command-line arguments using configargparse library.
     cfg_parser = configargparse.ArgumentParser()
     cfg_parser.add_argument('--pc_dir', type=str,
                             help='point clouds directory')
@@ -225,6 +239,7 @@ if __name__ == '__main__':
 
     cfg = cfg_parser.parse_args()
 
+    # Check the data format specified in the arguments and load point clouds accordingly.
     if cfg.data_format == 'n':
         # Point cloud files are stored in a directory:
         pcd_fns = [os.path.join(cfg.pc_dir, fn) for fn in sorted(os.listdir(cfg.pc_dir)) if fn.endswith('.ply')]
@@ -242,8 +257,10 @@ if __name__ == '__main__':
     else:
         raise ValueError("Invalid data_format specified. Use 'n' (normal), 's' (surfelwarp), or 'g' (GLTF).")
 
+    # Create a list to store the loaded point clouds.
     pcd_list = []
 
+    # Load point clouds from files and add them to the 'pcd_list'.
     print('Loading point clouds...')
     for fn in pcd_fns:
         pcd = o3d.io.read_point_cloud(fn)
@@ -251,6 +268,7 @@ if __name__ == '__main__':
 
     print('Total:', len(pcd_list), 'point clouds loaded.')
 
+    # Create an instance of the PointCloudSequenceVisualizer class and run the visualization loop.
     pc_vis = PointCloudSequenceVisualizer(pcd_list, cfg.vis_stall, cfg.save_dir, cfg.no_autoplay, cfg.no_loop,
                                           cfg.rec_video_fps, cfg.cam_move)
     pc_vis.run()
