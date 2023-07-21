@@ -9,6 +9,7 @@ This project uses endoscopy images to generate a 3D reconstruction of the inside
 ```
 BIMAP-EndoNeRF/
 ├── docs/                               # documentation
+├── EndoNeRF/                            # A NeRF-based framework for Endoscopic Scene Reconstruction (EndoNeRF)
 ├── preprocessing/
 │   ├── camposes_helper/                # required code to obtain cameraposes
 │   │    ├── colmap_read_model.py
@@ -55,7 +56,58 @@ BIMAP-EndoNeRF/
 ├── data/
 │   ├── images/
 │   ├── depth/
+│   ├── masks/           # only for EndoNeRF, create a mask images in black (same dimension as the RGB image input)
+│   ├── gt_masks/        # only for EndoNeRF, create a mask images in black (same dimension as the RGB image input)
 │   └── poses_bound.npy
 ```
 
-6. 
+## Point Cloud Reconstruction - EndoNeRF
+
+0. Congig file
+
+Example
+```shell
+expname = reco_0003_training_2
+datadir = ../reco_0003/
+```
+
+1. Training
+Type the command below to train the model:
+
+```shell
+export CUDA_VISIBLE_DEVICES=0   # Specify GPU id
+python run_endonerf.py --config configs/{your_config_file}.txt
+```
+
+Example
+```shell
+export CUDA_VISIBLE_DEVICES=0
+python run_endonerf.py --config configs/oral2.txt --no_mask_raycast --no_depth_refine
+```
+We put an example of the config file in configs/example.txt. The log files and output will be saved to logs/{expname}, where expname is specified in the config file.
+
+2. Reconstruction
+After training, type the command below to reconstruct point clouds from the optimized model:
+
+```shell
+python endo_pc_reconstruction.py --config_file configs/{your_config_file}.txt --n_frames {num_of_frames} --depth_smoother --depth_smoother_d 28
+```
+
+Example
+```shell
+python3 endo_pc_reconstruction.py --config_file configs/oral2.txt --n_frames 45 --depth_smoother --depth_smoother_d 28
+```
+The reconstructed point clouds will be saved to logs/{expname}/reconstructed_pcds_{epoch}. For more options of this reconstruction script, type python endo_pc_reconstruction.py -h.
+
+4. Visualization
+We also build a visualizer to play point cloud animations. To display reconstructed point clouds, type the command as follows.
+
+```shell
+python vis_pc.py --pc_dir logs/{expname}/reconstructed_pcds_{epoch}
+```
+Example
+```shell
+python3 vis_pc.py --pc_dir logs/reco_0003_training_2/reconstructed_pcds_100000
+```
+Type python vis_pc.py -h for more options of the visualizer.
+
