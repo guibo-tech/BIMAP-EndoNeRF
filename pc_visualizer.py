@@ -3,15 +3,16 @@ import numpy as np
 import imageio  # import imageio
 import os
 import configargparse
+import trimesh
 
 ###################################################################################################
 # Usage Example
 ###################################################################################################
 
-# python 3D_pc_visualizer.py --pc_dir data_source/reco_001/pc_ply
-# python 3D_pc_visualizer.py --pc_dir data_source/reco_001/pc_ply --vis_stall 10
+# python pc_visualizer.py --pc_dir data_source/reco_001/pc_ply
+# python pc_visualizer.py --pc_dir data_source/reco_001/pc_ply --vis_stall 10
 
-# Type "python 3D_pc_visualizer.py -h" for more options of the visualizer.
+# Type "python pc_visualizer.py -h" for more options of the visualizer.
 
 ###################################################################################################
 
@@ -227,10 +228,19 @@ if __name__ == '__main__':
     if cfg.data_format == 'n':
         # Point cloud files are stored in a directory:
         pcd_fns = [os.path.join(cfg.pc_dir, fn) for fn in sorted(os.listdir(cfg.pc_dir)) if fn.endswith('.ply')]
+        # Check for GLTF files in the directory
+        gltf_files = [fn for fn in os.listdir(cfg.pc_dir) if fn.endswith('.gltf')]
+        if gltf_files:
+            print("GLTF data format detected in the directory.")
+            print("Please convert the GLTF files to PLY format using a conversion tool. (in our project: gltf2ply.py)")
+            print("Once converted, place the PLY files in the 'pc_ply' directory.")
+            exit(0)
     elif cfg.data_format == 's':
         # Output of surfelwarp
         pcd_fns = [os.path.join(cfg.pc_dir, dn, 'live.ply') for dn in
                    sorted(os.listdir(cfg.pc_dir), key=lambda elem: int(elem[6:]))]
+    else:
+        raise ValueError("Invalid data_format specified. Use 'n' (normal), 's' (surfelwarp), or 'g' (GLTF).")
 
     pcd_list = []
 
