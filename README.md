@@ -63,8 +63,10 @@ BIMAP-EndoNeRF/
 
 ## Point Cloud Reconstruction - EndoNeRF
 
-0. Congig file
+0. Config file
 
+
+Edit the configs/example.txt
 Example
 ```shell
 expname = reco_0003_training_2
@@ -72,6 +74,8 @@ datadir = ../reco_0003/
 ```
 
 1. Training
+
+
 Type the command below to train the model:
 
 ```shell
@@ -87,6 +91,8 @@ python run_endonerf.py --config configs/oral2.txt --no_mask_raycast --no_depth_r
 We put an example of the config file in configs/example.txt. The log files and output will be saved to logs/{expname}, where expname is specified in the config file.
 
 2. Reconstruction
+
+
 After training, type the command below to reconstruct point clouds from the optimized model:
 
 ```shell
@@ -99,15 +105,17 @@ python3 endo_pc_reconstruction.py --config_file configs/oral2.txt --n_frames 45 
 ```
 The reconstructed point clouds will be saved to logs/{expname}/reconstructed_pcds_{epoch}. For more options of this reconstruction script, type python endo_pc_reconstruction.py -h.
 
-4. Visualization
+3. Visualization
+
+
 We also build a visualizer to play point cloud animations. To display reconstructed point clouds, type the command as follows.
 
 ```shell
-python vis_pc.py --pc_dir logs/{expname}/reconstructed_pcds_{epoch}
+python pc_visualizer.py --pc_dir logs/{expname}/reconstructed_pcds_{epoch}
 ```
 Example
 ```shell
-python3 vis_pc.py --pc_dir logs/reco_0003_training_2/reconstructed_pcds_100000
+python3 pc_visualizer.py --pc_dir logs/reco_0003_training_2/reconstructed_pcds_100000
 ```
-Type python vis_pc.py -h for more options of the visualizer.
+Type python pc_visualizer.py -h for more options of the visualizer.
 
