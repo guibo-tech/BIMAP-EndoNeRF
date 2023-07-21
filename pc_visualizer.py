@@ -6,8 +6,13 @@ import configargparse
 import trimesh
 
 ###################################################################################################
-# Usage Example
+
+# The provided code is a Python script that visualizes a sequence of point clouds using the Open3D library.
+# The script allows interactive control of the visualization, including playback, pausing, screenshot capture,
+# camera movement, and video recording. The script can be run from the command line with various options.
+
 ###################################################################################################
+# Usage Example
 
 # python pc_visualizer.py --pc_dir data_source/reco_001/pc_ply
 # python pc_visualizer.py --pc_dir data_source/reco_001/pc_ply --vis_stall 10

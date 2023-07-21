@@ -1,6 +1,6 @@
-expname = reco_0003_training_2
+expname = reco_0003_training_3
 basedir = ./logs
-datadir = ../reco_0003/
+datadir = /home/guibo/repos/reco_0003
 dataset_type = llff
 
 factor = 1
