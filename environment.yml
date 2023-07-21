@@ -1,0 +1,39 @@
+name: bimap-endonerf
+channels:
+  - pytorch
+  - nvidia
+  - defaults
+dependencies:
+  - cuda-cccl=12.1.109=0
+  - cuda-cudart=11.7.99=0
+  - cuda-cudart-dev=11.7.99=0
+  - cuda-cupti=11.7.101=0
+  - cuda-libraries=11.7.1=0
+  - cuda-libraries-dev=11.7.1=0
+  - cuda-nvrtc=11.7.99=0
+  - cuda-nvrtc-dev=11.7.99=0
+  - cuda-nvtx=11.7.91=0
+  - cuda-runtime=11.7.1=0
+  - pip=22.3.1=py310haa95532_0
+  - python=3.10.8=h966fe2a_1
+  - pytorch=2.0.1=py3.10_cuda11.7_cudnn8_0
+  - pytorch-cuda=11.7=h16d0643_5
+  - pytorch-mutex=1.0=cuda
+  - pip:
+      - chardet==5.1.0
+      - aspose_3d==23.6.0
+      - ConfigArgParse==1.5.5
+      - gradio==3.37.0
+      - charset-normalizer==3.1.0
+      - imageio==2.31.1
+      - imutils==0.5.4
+      - numpy==1.23.5
+      - open3d==0.17.0
+      - opencv_contrib_python==4.8.0.74
+      - pillow==10.0.0
+      - timm==0.6.12
+      - skimage==0.0
+      - torch==2.0.1
+      - torchvision==0.15.2
+      - tqdm==4.65.0
+      - transformers==4.30.1

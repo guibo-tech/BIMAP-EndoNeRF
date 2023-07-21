@@ -99,24 +99,28 @@ if __name__ == "__main__":
     parser.add_argument('--video_path',
                         default=None,
                         type=str,
-                        help='Folder with input video'
+                        required=True,
+                        help='Path to input video'
                         )
 
     parser.add_argument('--fps',
                         default=3,
                         type=int,
-                        help='Frames per seconds captured from the video'
+                        required=False,
+                        help='How many frames per seconds are captured from the video'
                         )
 
     parser.add_argument('--start_time',
                         default=None,
                         type=int,
-                        help='Start point in second of the interval to be reconstructed'
+                        required=False,
+                        help='Start point in seconds of the interval to be reconstructed'
                         )
     parser.add_argument('--end_time',
                         default=None,
                         type=int,
-                        help='End point in second of the interval to be reconstructed'
+                        required=False,
+                        help='End point in seconds of the interval to be reconstructed'
                         )
 
     parser.set_defaults(optimize=False)
