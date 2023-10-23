@@ -15,7 +15,7 @@ from matplotlib import pyplot as plt
 import argparse
 
 # Example Usage
-# python vc_segmenter.py --directory /data/images/frame40.png
+# python vc_segmenter.py --directory /data/images/frame40.png /home/guibo/repos
 
 def select_roi(image):
     # Display the image and allow the user to draw a ROI

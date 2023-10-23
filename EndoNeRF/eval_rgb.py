@@ -9,7 +9,7 @@ import math
 from math import exp
 import configargparse
 import random, time
-import imageio
+import imageio.v2 as imageio #import imageio
 import lpips
 
 
@@ -180,7 +180,7 @@ if __name__ == '__main__':
     mask_list = [imageio.imread(os.path.join(mask_dir, fn)) for fn in sorted(os.listdir(mask_dir)) if fn.endswith('.png')]
     img_list = [imageio.imread(os.path.join(img_dir, fn)) for fn in sorted(os.listdir(img_dir)) if fn.endswith('.png')]
 
-    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # GPU runs out of memory, use CPU instead
     device = torch.device("cpu")
 
     masks = np.stack(mask_list, axis=0).astype(np.float64)[skip_gt:] / 255.0
@@ -193,9 +193,16 @@ if __name__ == '__main__':
 
     print('Shapes (gt, imgs, masks):', gts.shape, imgs.shape, masks.shape)
 
-    masks = torch.Tensor(1.0 - masks).to(device).unsqueeze(-1)
+    # masks = torch.Tensor(1.0 - masks).to(device).unsqueeze(-1) # it adds another dim at the end, then error occurs
+    masks = torch.Tensor(1.0 - masks).to(device)
     gts = torch.Tensor(gts).to(device) * masks
     imgs = torch.Tensor(imgs).to(device) * masks
+
+    #TODO: debug
+    # masks = torch.Tensor(1.0 - masks)  # Convert NumPy array to PyTorch tensor
+    # gts = torch.Tensor(gts) * masks
+    # imgs = torch.Tensor(imgs) * masks
+
     masks = masks[start_index:]
     gts = gts[start_index:]
     imgs = imgs[start_index:]
@@ -206,6 +213,7 @@ if __name__ == '__main__':
     ssim_ = ssim(imgs, gts, format='NHWC')
     lpips_ = lpips(imgs, gts, format='NHWC')
 
+    print('MSE:', mse.item())
     print('PSNR:', psnr.item())
     print('SSIM:', ssim_.item())
     print('LPIPS:', torch.mean(lpips_).item())
