@@ -1,8 +1,17 @@
-# BIMAP-EndoNeRF
+# Neural Radiance Fields for 3D Reconstruction in Monoscopic Laryngeal Endoscopy
 
 ## Introduction
 This project uses endoscopy images to generate a 3D reconstruction of the inside of the human body. This is done by using the endoscope's position and orientation as input to the NeRF network, along with the 2D images captured by the endoscope, and their corresponding depth maps. The NeRF network then generates a dynamic 3D model of the internal structure of the body that matches the captured images.
 
+Paper: **[Neural Radiance Fields for 3D Reconstruction in Monoscopic Laryngeal Endoscopy](https://ieeexplore.ieee.org/document/10635332)** 
+
+Published in: [2024 IEEE International Symposium on Biomedical Imaging (ISBI)](https://ieeexplore.ieee.org/xpl/conhome/10635099/proceeding)
+
+Authors: Guilherme L. Borges, Belén L. Rodríguez, Marta L.B. García, Anne Schützenberger, Andreas M. Kist
+
+## 3D Reconstruction Demo
+
+https://github.com/user-attachments/assets/ebf50493-7a9c-4bfb-add1-21f875f683fb
 
 ## Project Structure
 
